@@ -1,0 +1,5 @@
+spring:
+  cloud:
+    config:
+      #Avoid failing because no config server in unit tests
+      fail-fast: false

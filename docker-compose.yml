@@ -1,0 +1,21 @@
+version: '3'
+services:
+
+  config-server:
+    build: config-server/.
+    ports:
+      - "8888:8888"
+    volumes:
+      - "${CONFIG_GIT_REPO}:/git/repo"
+    environment:
+      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: /git/repo
+
+  demo-app:
+    build: demo-app/.
+    depends_on:
+      - config-server
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+#      LOGGING_LEVEL_ROOT: DEBUG
